@@ -1,0 +1,15 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+body {
+  background-color: #abc6f8;
+  background-image: radial-gradient(closest-side, #ffffff, rgba(235, 105, 78, 0)), radial-gradient(closest-side, #facbcb, rgba(243, 11, 164, 0)), radial-gradient(closest-side, #edfcca, rgba(254, 234, 131, 0)), radial-gradient(closest-side, #c5f8f1, rgba(170, 142, 245, 0)), radial-gradient(closest-side, #cec8f3, rgba(248, 192, 147, 0));
+  background-repeat: no-repeat;
+}

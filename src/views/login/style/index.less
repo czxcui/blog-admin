@@ -1,0 +1,195 @@
+.login-container {
+  // background-color: red;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  // overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-box {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 1px 3px 7px 1px rgba(92, 92, 92, 0.315);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  //左边图片
+  .login-left {
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .people {
+      position: absolute;
+
+      width: 60%;
+      //这里使用left和top是用来配合动画做出场动画
+      left: -30%;
+      top: 60%;
+      z-index: 2;
+      animation: peopleAnimation 2s forwards ease;
+    }
+    .sphere {
+      position: absolute;
+      width: 80%;
+      left: 10%;
+      z-index: 1;
+      animation: sphereAnimation 2s forwards ease;
+    }
+
+    //再出场动画结束时，这里再vue中添加这个使他可以上下移动
+    .p-other-animtion {
+      animation: pOtherAnimation 3s infinite alternate linear;
+    }
+    .s-other-animtion {
+      animation: sOtherAnimation 3s infinite alternate linear;
+    }
+  }
+
+  //右边
+  .login-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 100%;
+    .login-from {
+      width: 60%;
+
+      display: flex;
+      flex-direction: column;
+
+      //标题
+      .login-title {
+        .title {
+          font-size: 40px;
+          text-align: left;
+          font-family: "Century Gothic", Times, serif;
+        }
+      }
+
+      //表单
+      .dynamicFrom {
+        & > * {
+          margin-bottom: 30px;
+        }
+
+        .btns {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          .tips {
+            position: relative;
+            text-align: right;
+            display: block;
+            color: rgb(160, 170, 182);
+            margin-top: -10px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            &:hover {
+              color: rgb(124, 163, 209);
+            }
+          }
+        }
+        //再less下要使用/deep/才可以穿透element-plus的组件样式
+        /deep/ .el-input__wrapper {
+          height: 70px;
+          font-size: 20px;
+          box-sizing: border-box;
+          border-radius: 10px;
+          background-color: rgb(210, 223, 237);
+          color: rgb(80, 82, 84);
+        }
+        /deep/.el-input__inner {
+          padding: 20px;
+          // font-family: "Century Gothic", Times, serif;
+        }
+        /deep/ .el-button--primary {
+          border: none;
+          height: 50px;
+          border-radius: 10px;
+          background-color: rgb(68, 96, 241);
+          box-shadow: -20px 28px 42px 0 rgba(62, 145, 255, 0.37);
+          font-weight: 600;
+          font-family: "Century Gothic", Times, serif;
+        }
+
+        /deep/ .el-button--primary:hover {
+          background-color: rgb(103, 125, 236);
+        }
+        /deep/ .el-button--primary:active {
+          background-color: rgb(39, 63, 184);
+        }
+      }
+
+      //表单下的下划线
+      .other-login {
+        width: 100%;
+        margin: 20px 0;
+        text-align: center;
+
+        .line {
+          display: inline-block;
+          width: 35%;
+          height: 1px;
+          background-color: rgb(162, 172, 185);
+        }
+        .divider-text {
+          display: inline-block;
+          width: 150px;
+          color: rgb(162, 172, 185);
+          white-space: normal;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+//出场动画
+@keyframes sphereAnimation {
+  0% {
+    width: 10%;
+  }
+  100% {
+    width: 80%;
+    transform: translate(5%, 0%);
+  }
+}
+@keyframes peopleAnimation {
+  0% {
+    width: 30%;
+  }
+  100% {
+    width: 60%;
+    transform: translate(80%, -60%);
+  }
+}
+
+//上下移动画
+@keyframes pOtherAnimation {
+  0% {
+    transform: translate(80%, -65%);
+  }
+  100% {
+    transform: translate(80%, -70%);
+  }
+}
+@keyframes sOtherAnimation {
+  0% {
+    transform: translate(5%, -5%);
+  }
+  100% {
+    transform: translate(5%, 0%);
+  }
+}

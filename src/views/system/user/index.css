@@ -1,0 +1,53 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-container > * {
+  box-shadow: 1px 1px 4px 1px #d3d0d0;
+  border-radius: 20px;
+  background-color: white;
+}
+.user-container .user-header-box {
+  width: 98%;
+  height: 80px;
+  margin: 9px;
+  border: 1px solid #ebeef5;
+}
+.user-container .user-header-box .user-header {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-top: 7px;
+  vertical-align: middle;
+  margin-left: 30px;
+}
+.user-container .user-header-box .user-header .search-box {
+  display: flex;
+  align-items: center;
+}
+.user-container .user-header-box .user-header .search-box > :first-child {
+  margin-right: 9px;
+}
+.user-container .user-table-box {
+  width: 98%;
+  display: flex;
+  height: 700px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.user-container .user-table-box .table-pagination {
+  margin: 17px;
+}
+.user-container .user-table-box .user-table {
+  width: 96%;
+  margin-top: 9px;
+}
+.user-container .user-table-box .user-table .dialog-footer button:first-child {
+  margin-right: 10px;
+}
+.user-container .user-table-box .user-table /deep/ .el-dialog--center .el-dialog__body {
+  text-align: center;
+}
