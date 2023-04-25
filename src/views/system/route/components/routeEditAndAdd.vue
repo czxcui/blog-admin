@@ -1,11 +1,15 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="formTitle">
+  <el-dialog width="750" v-model="dialogFormVisible" :title="formTitle">
+    <template #header>
+      <h2>添加</h2>
+      <el-divider />
+    </template>
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
       :rules="rules"
       :label-width="formLabelWidth"
-      class="demo-ruleForm"
+      class="roteRuleForm"
       :size="formSize"
       :label-position="labelPosition"
       status-icon
@@ -20,7 +24,8 @@
         />
       </el-form-item>
       <el-form-item label="路由地址" prop="url">
-        <el-input v-model="ruleForm.url" placeholder="建议与权限名同名" />
+        <el-input v-model="ruleForm.url" placeholder="建议与权限名同名">
+        </el-input>
       </el-form-item>
 
       <!-- <el-form-item label="重定向" prop="icon">
@@ -65,18 +70,27 @@
           show-checkbox
           check-strictly
           :render-after-expand="false"
-          @node-click="handleNodeClick"
+          @check-change="handleNodeClick"
         />
       </el-form-item>
-      <el-form-item>
+      <!-- <el-form-item>
         <el-button type="primary" @click="submitForm(ruleFormRef)">
           {{ formTitle }}
         </el-button>
         <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template #footer>
-      <span class="dialog-footer"> </span>
+      <el-divider />
+      <span class="dialog-footer">
+        <el-button class="ebtn" type="primary" @click="submitForm(ruleFormRef)">
+          发布
+        </el-button>
+        <el-button class="ebtn" @click="resetForm(ruleFormRef)">重置</el-button>
+        <el-button class="ebtn" @click="dialogFormVisible = false"
+          >取消</el-button
+        >
+      </span>
     </template>
   </el-dialog>
 </template>
@@ -111,10 +125,16 @@ interface Tree {
   children?: Tree[];
 }
 const treeRef = ref<InstanceType<typeof ElTree>>();
-const handleNodeClick = (data: Tree) => {
-  console.log(data);
-  console.log(treeRef.value.getCurrentNode());
-  console.log(treeRef.value.getHalfCheckedNodes());
+const handleNodeClick = (data: Tree, click:boolean) => {
+
+  if(ruleForm.url==data.url&&!click)
+     ruleForm.url = ""
+  if (ruleForm.url!=data.url && click) 
+    ruleForm.url = data.url;
+
+
+  // console.log(treeRef.value.getCurrentNode());
+  // console.log(treeRef.value.getHalfCheckedNodes());
 };
 
 onUpdated(() => {});
@@ -131,6 +151,7 @@ let treeData: Tree[] = reactive([]);
 const funTreeData = () => {
   systemRoute.getPermissionList().then((r) => {
     treeData.push(...recursionTree(r));
+    // console.log(treeData)
   });
 };
 const recursionTree = (d: unknown) => {
@@ -139,6 +160,7 @@ const recursionTree = (d: unknown) => {
     let tmp: Tree = {
       value: element.id,
       label: element.title,
+      url: element.url,
       children:
         element.children.length > 0 ? recursionTree(element.children) : [],
     };
@@ -152,9 +174,7 @@ const showDialogFormVisible = (isVisible: number, id: number) => {
   if (isVisible === 1) {
     formTitle.value = "添加";
   } else {
-
     systemRoute.getPermission(id).then((r) => {
-
       Object.assign(ruleForm, r, {
         parentId: r.parentId === 0 ? "" : r.parentId,
       });
@@ -166,7 +186,7 @@ const showDialogFormVisible = (isVisible: number, id: number) => {
 const rules = reactive<FormRules>({
   name: [
     { required: true, message: "请输入权限名", trigger: "blur" },
-    { min: 3, max: 9, message: "长度为3~9", trigger: "blur" },
+    { min: 3, max: 20, message: "长度为3~20", trigger: "blur" },
   ],
   title: [
     {
@@ -226,12 +246,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       // }
       if (formTitle.value === "修改") {
         console.log("修改");
-        systemRoute.edit(ruleForm);
+        // systemRoute.edit(ruleForm);
       } else {
+        console.log(ruleForm);
         systemRoute.add(ruleForm);
       }
-      location.reload();
-      // window.location.reload();
+      // location.reload();
+    
     } else {
       console.log("error submit!", fields);
     }
@@ -263,7 +284,14 @@ defineExpose({
 .el-input {
   width: 300px;
 }
+.roteRuleForm {
+  margin-left: 40px;
+}
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.ebtn {
+  width: 89px;
+  height: 37px;
 }
 </style>

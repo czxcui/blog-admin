@@ -42,11 +42,11 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     component:()=>import("@/views/error/404.vue"),
     hidden:true
   },
-  {
-    path: '/:pathMatch(.*)',
-    redirect: '/404',
-    hidden:true
-},
+//   {
+//     path: '/:pathMatch(.*)',
+//     redirect: '/404',
+//     hidden:true
+// },
   {
     path: "/",
     name: "layout",
